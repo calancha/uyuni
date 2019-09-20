@@ -521,8 +521,10 @@ class RepoSync(object):
                         relative_url = '_'.join(url.split('://')[1].split('/')[1:])
                         repo_name = relative_url.replace("?", "_").replace("&", "_").replace("=", "_")
 
-                    (ca_cert_file, client_cert_file, client_key_file) = (None, None, None)
+                    ca_cert_file = client_cert_file = client_key_file = repo_id = None
+
                     if data['id'] is not None:
+                        repo_id = int(data["id"])
                         keys = rhnSQL.fetchall_dict("""
                         select k1.description as ca_cert_name, k1.key as ca_cert, k1.org_id as ca_cert_org,
                                k2.description as client_cert_name, k2.key as client_cert, k2.org_id as client_cert_org,
@@ -533,7 +535,7 @@ class RepoSync(object):
                              rhncryptokey k2 on csssl.ssl_client_cert_id = k2.id left outer join
                              rhncryptokey k3 on csssl.ssl_client_key_id = k3.id
                         where cs.id = :repo_id
-                        """, repo_id=int(data['id']))
+                        """, repo_id=repo_id)
                         if keys:
                             ssl_set = get_single_ssl_set(keys, check_dates=self.check_ssl_dates)
                             if ssl_set:
