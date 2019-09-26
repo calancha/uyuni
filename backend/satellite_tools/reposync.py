@@ -39,7 +39,7 @@ from rhn.connections import idn_puny_to_unicode
 from spacewalk.common.usix import raise_with_tb
 
 from spacewalk.server import rhnPackage, rhnSQL, rhnChannel, suseEula
-from spacewalk.common import fileutils, rhnLog, rhnCache, rhnMail, suseLib
+from spacewalk.common import fileutils, rhnLog, rhnCache, rhnMail, suseLib, repo
 from spacewalk.common.rhnTB import fetchTraceback
 from spacewalk.common.rhnLib import isSUSE, utc
 from spacewalk.common.checksum import getFileChecksum
@@ -54,7 +54,6 @@ from spacewalk.satellite_tools.repo_plugins import CACHE_DIR
 from spacewalk.satellite_tools.repo_plugins import yum_src
 from spacewalk.server import taskomatic, rhnPackageUpload
 from spacewalk.satellite_tools.satCerts import verify_certificate_dates
-
 from spacewalk.satellite_tools.syncLib import log, log2, log2disk, dumpEMAIL_LOG, log2background
 
 translation = gettext.translation('spacewalk-backend-server', fallback=True)
@@ -925,7 +924,14 @@ class RepoSync(object):
         if saveurl.password:
             saveurl.password = "*******"
 
-        packages = plug.list_packages(filters, self.latest)
+        packages = []
+        try:
+            packages = plug.list_packages(filters, self.latest)
+        except repo.GeneralRepoException as exc:
+            log(0, "Repository failure: {}".format(exc))
+        except Exception as exc:
+            log(0, "Unhandled failure occurred while listing repository packages: {}".format(exc))
+
         to_disassociate = {}
         to_process = []
         num_passed = len(packages)
