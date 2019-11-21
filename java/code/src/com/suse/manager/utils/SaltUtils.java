@@ -1348,7 +1348,12 @@ public class SaltUtils {
         }
         hwMapper.mapVirtualizationInfo(result.getSmbiosRecordsSystem());
         hwMapper.mapNetworkInfo(result.getNetworkInterfaces(), Optional.of(result.getNetworkIPs()),
-                result.getNetworkModules(), result.getFqdns());
+                result.getNetworkModules(),
+                Stream.concat(
+                    result.getFqdns().stream(),
+                    result.getCustomFqdns().stream()
+                ).distinct().collect(Collectors.toList())
+        );
 
         // Let the action fail in case there is error messages
         if (!hwMapper.getErrors().isEmpty()) {

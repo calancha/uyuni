@@ -155,6 +155,20 @@ public class HwProfileUpdateSlsResult {
     }
 
     /**
+     * Get custom defined fqdns in grains that are useful for
+     * fqdns that don't support reverse lookup from ip to fqdn.
+     *
+     * @return list of custom fqdns.
+     */
+    public List<String> getCustomFqdns() {
+        return Optional.ofNullable(this.getGrains().get("susemanager")).flatMap(susemanager -> {
+            return Optional.ofNullable(
+                    (List<String>)((Map<String, Object>)susemanager).get("custom_fqdns")
+            );
+        }).orElseGet(Collections::emptyList);
+    }
+
+    /**
      * Get the fqdns from network.fqdns module
      * and if module is not available then fall back to 'fqdns' grain.
      * @return fqdns of the system
