@@ -296,7 +296,7 @@ public class FormulaManager {
      */
     public boolean hasSystemFormulaAssigned(String formulaName, Integer systemId) {
         return FormulaFactory
-                        .getCombinedFormulasByServerId(systemId.longValue())
+                        .getFormulasByServerId(systemId.longValue())
                         .contains(formulaName);
     }
 

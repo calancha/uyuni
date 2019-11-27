@@ -363,6 +363,16 @@ public class FormulaFactory {
     }
 
     /**
+     * Returns the formulas applied to a given server
+     * @param serverId the id of the server
+     * @return the list of formulas
+     */
+    public static List<String> getFormulasByServerId(Long serverId) {
+        List<String> formulas = getFormulasByMinionId(MinionServerFactory.getMinionId(serverId));
+        return formulas;
+    }
+
+    /**
      * Returns a combination of all formulas applied to a server and
      * all formulas inherited from its groups.
      * @param serverId the id of the server
