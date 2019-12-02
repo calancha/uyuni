@@ -13,7 +13,7 @@ Feature: Install and upgrade package on the Ubuntu minion via Salt through the U
     And I follow "Software" in the content area
     And I click on "Update Package List"
     And I follow "Events" in the content area
-    And I wait until I do not see "Package List Refresh scheduled by admin" text, refreshing the page
+    And I wait until I do not see "Package List Refresh scheduled" text, refreshing the page
     And I wait until package "virgo-dummy" is installed on "ubuntu_minion" via spacecmd
     And I wait until package "andromeda-dummy" is removed from "ubuntu_minion" via spacecmd
 
@@ -26,7 +26,7 @@ Feature: Install and upgrade package on the Ubuntu minion via Salt through the U
     And I click on "Install Selected Packages"
     And I click on "Confirm"
     And I should see a "1 package install has been scheduled for" text
-    When I wait until event "Package Install/Upgrade scheduled by admin" is completed
+    When I wait until event "Package Install/Upgrade scheduled" is completed
     Then Deb package "andromeda-dummy" with version "2.0" should be installed on "ubuntu_minion"
 
 @ubuntu_minion
@@ -38,12 +38,12 @@ Feature: Install and upgrade package on the Ubuntu minion via Salt through the U
     And I click on "Upgrade Packages"
     And I click on "Confirm"
     And I should see a "1 package upgrade has been scheduled for" text
-    When I wait until event "Package Install/Upgrade scheduled by admin" is completed
+    When I wait until event "Package Install/Upgrade scheduled" is completed
     Then Deb package "virgo-dummy" with version "2.0" should be installed on "ubuntu_minion"
 
 @ubuntu_minion
   Scenario: Cleanup: remove virgo-dummy and andromeda-dummy packages from Ubuntu minion
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     And I remove package "andromeda-dummy" from this "ubuntu_minion"
     And I install package "andromeda-dummy=1.0" on this "ubuntu_minion"
     And I remove package "virgo-dummy" from this "ubuntu_minion"

@@ -159,16 +159,24 @@ Then(/^the PXE boot minion should have been reformatted$/) do
 end
 
 # user salt steps
-Given(/^I am authorized as an example user with no roles$/) do
+Given(/^I create a user with name "([^"]*)" and password "([^"]*)"/) do |user, password|
   @rpc = XMLRPCUserTest.new(ENV['SERVER'])
   @rpc.login('admin', 'admin')
-  @username = 'testuser' + (0...8).map { (65 + rand(26)).chr }.join.downcase
-  @rpc.create_user(@username, 'linux')
-  step %(I am authorized as "#{@username}" with password "linux")
+  $username = user
+  $password = password
+  @rpc.create_user($username, $password)
+  @rpc.add_role($username, 'satellite_admin')
+  @rpc.add_role($username, 'org_admin')
+  @rpc.add_role($username, 'channel_admin')
+  @rpc.add_role($username, 'config_admin')
+  @rpc.add_role($username, 'system_group_admin')
+  @rpc.add_role($username, 'activation_key_admin')
+  @rpc.add_role($username, 'image_admin')
+  puts "New user #{$username} created"
 end
 
 Then(/^I can cleanup the no longer needed user$/) do
-  @rpc.delete_user(@username)
+  @rpc.delete_user($username)
 end
 
 When(/^I click on preview$/) do

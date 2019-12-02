@@ -4,7 +4,7 @@
 Feature: Chanel subscription via SSM
 
   Scenario: Change child channels for two systems subscribed to a base channel
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I am on the System Overview page
     And I follow "Clear"
     And I check the "sle_minion" client
@@ -62,12 +62,12 @@ Feature: Chanel subscription via SSM
 
   Scenario: Check channel change has completed for the SLES minion
     Given I am on the Systems overview page of this "sle_minion"
-    When I wait until event "Subscribe channels scheduled by admin" is completed
+    When I wait until event "Subscribe channels scheduled" is completed
     Then I should see "The client completed this action on" at least 3 minutes after I scheduled an action
 
   Scenario: Check channel change has completed for the SLES client
     Given I am on the Systems overview page of this "sle_client"
-    When I wait until event "Subscribe channels scheduled by admin" is completed
+    When I wait until event "Subscribe channels scheduled" is completed
     Then I should see "The client completed this action on" at least 3 minutes after I scheduled an action
 
   Scenario: Check the SLES minion is subscribed to the new channels
@@ -102,7 +102,7 @@ Feature: Chanel subscription via SSM
 
 @centos_minion
   Scenario: System default channel can't be determined
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I am on the System Overview page
     And I check the "ceos_minion" client
     And I uncheck the "sle_minion" client
@@ -133,7 +133,7 @@ Feature: Chanel subscription via SSM
 
 @centos_minion
   Scenario: Cleanup: remove CentOS systems from SSM
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     And I am on the System Overview page
     When I uncheck the "ceos_minion" client
     And I check the "sle_minion" client
@@ -142,7 +142,7 @@ Feature: Chanel subscription via SSM
 
 @ubuntu_minion
   Scenario: System default channel can't be determined
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I am on the System Overview page
     And I check the "ubuntu_minion" client
     And I uncheck the "sle_minion" client
@@ -173,7 +173,7 @@ Feature: Chanel subscription via SSM
 
 @ubuntu_minion
   Scenario: Cleanup: remove Ubuntu system from SSM
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     And I am on the System Overview page
     When I uncheck the "ubuntu_minion" client
     And I check the "sle_minion" client
@@ -215,5 +215,5 @@ Feature: Chanel subscription via SSM
     Then channel "Test-Channel-x86_64 Child Channel" should not be enabled on "sle_client"
 
   Scenario: Cleanup: remove remaining systems from SSM after channel subscription tests
-    When I am authorized as "admin" with password "admin"
+    When I am authorized with the feature's user
     And I follow "Clear"

@@ -8,7 +8,7 @@ Feature: Bootstrap a SSH-managed Ubuntu minion and do some basic operations on i
 
 @ubuntu_minion
   Scenario: Bootstrap a SSH-managed Ubuntu minion
-    Given I am authorized
+    Given I am authorized as "admin" with password "admin"
     When I go to the bootstrapping page
     And I wait for "60" seconds
     Then I should see a "Bootstrap Minions" text
@@ -50,7 +50,7 @@ Feature: Bootstrap a SSH-managed Ubuntu minion and do some basic operations on i
     Then I should see a "Confirm Software Channel Change" text
     When I click on "Confirm"
     Then I should see a "Changing the channels has been scheduled." text
-    And I wait until event "Subscribe channels scheduled by admin" is completed
+    And I wait until event "Subscribe channels scheduled" is completed
 
 @ubuntu_minion
   Scenario: Check events history for failures on SSH-managed Ubuntu minion

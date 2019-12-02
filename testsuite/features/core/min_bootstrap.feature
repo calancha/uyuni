@@ -4,12 +4,12 @@
 Feature: Be able to bootstrap a Salt minion via the GUI
 
   Scenario: Create the bootstrap repository for a Salt client
-     Given I am authorized
+     Given I am authorized as "admin" with password "admin"
      And I create the "x86_64" bootstrap repository for "sle_minion" on the server
      And I wait for "15" seconds
 
   Scenario: Bootstrap a SLES minion with wrong hostname
-     Given I am authorized
+     Given I am authorized as "admin" with password "admin"
      And I go to the bootstrapping page
      Then I should see a "Bootstrap Minions" text
      When I enter "not-existing-name" as "hostname"
@@ -21,7 +21,7 @@ Feature: Be able to bootstrap a Salt minion via the GUI
      Then I should not see a "GenericSaltError" text
 
   Scenario: Bootstrap a SLES minion with wrong SSH credentials
-     Given I am authorized
+     Given I am authorized as "admin" with password "admin"
      And I go to the bootstrapping page
      Then I should see a "Bootstrap Minions" text
      When I enter the hostname of "sle_minion" as "hostname"
@@ -33,7 +33,7 @@ Feature: Be able to bootstrap a Salt minion via the GUI
      Then I should not see a "GenericSaltError" text
 
   Scenario: Bootstrap a SLES minion with wrong SSH port number
-     Given I am authorized
+     Given I am authorized as "admin" with password "admin"
      And I go to the bootstrapping page
      Then I should see a "Bootstrap Minions" text
      When I enter the hostname of "sle_minion" as "hostname"
@@ -46,7 +46,7 @@ Feature: Be able to bootstrap a Salt minion via the GUI
      And I should see a "port 11: Connection refused" text
 
   Scenario: Bootstrap a SLES minion
-     Given I am authorized
+     Given I am authorized as "admin" with password "admin"
      When I go to the bootstrapping page
      Then I should see a "Bootstrap Minions" text
      When I enter the hostname of "sle_minion" as "hostname"
@@ -58,7 +58,7 @@ Feature: Be able to bootstrap a Salt minion via the GUI
      And I wait until I see "Successfully bootstrapped host!" text
 
   Scenario: Check the new bootstrapped minion in System Overview page
-     Given I am authorized
+     Given I am authorized as "admin" with password "admin"
      And I go to the minion onboarding page
      Then I should see a "accepted" text
      And the Salt master can reach "sle_minion"
@@ -91,7 +91,7 @@ Feature: Be able to bootstrap a Salt minion via the GUI
     Then I should see a "Confirm Software Channel Change" text
     When I click on "Confirm"
     Then I should see a "Changing the channels has been scheduled." text
-    And I wait until event "Subscribe channels scheduled by admin" is completed
+    And I wait until event "Subscribe channels scheduled" is completed
 
   # bsc#1085436 - Apache returns 403 Forbidden after a zypper refresh on minion
   Scenario: Check the new channel is working
@@ -101,7 +101,7 @@ Feature: Be able to bootstrap a Salt minion via the GUI
     When I query latest Salt changes on "sle_minion"
 
   Scenario: Run a remote command on normal SLES minion
-    Given I am authorized as "testing" with password "testing"
+    Given I am authorized as "admin" with password "admin"
     When I follow the left menu "Salt > Remote Commands"
     Then I should see a "Remote Commands" text in the content area
     When I enter command "file /tmp"
@@ -118,7 +118,7 @@ Feature: Be able to bootstrap a Salt minion via the GUI
     Then I run spacecmd listevents for "sle_minion"
 
   Scenario: Bootstrap should fail when minion already exists
-     Given I am authorized
+     Given I am authorized as "admin" with password "admin"
      And I go to the bootstrapping page
      Then I should see a "Bootstrap Minions" text
      When I enter the hostname of "sle_minion" as "hostname"

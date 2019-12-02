@@ -4,7 +4,7 @@
 Feature: Action chains on Salt minions
 
   Scenario: Pre-requisite: downgrade repositories to lower version on Salt minion
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I enable repository "test_repo_rpm_pool" on this "sle_minion"
     And I run "zypper -n rm andromeda-dummy" on "sle_minion" without error control
     And I run "zypper -n rm virgo-dummy" on "sle_minion" without error control
@@ -25,7 +25,7 @@ Feature: Action chains on Salt minions
     And I click on the filter button until page does contain "andromeda-dummy-1.0" text
 
   Scenario: Pre-requisite: ensure the errata cache is computed before testing on Salt minion
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I follow the left menu "Admin > Task Schedules"
     And I follow "errata-cache-default"
     And I follow "errata-cache-bunch"
@@ -71,7 +71,7 @@ Feature: Action chains on Salt minions
     Then I should see a "Action has been successfully added to the Action Chain" text
 
   Scenario: Create a configuration channel for testing action chain on Salt minion
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I follow the left menu "Configuration > Channels"
     And I follow "Create Config Channel"
     And I enter "Action Chain Channel" as "cofName"
@@ -81,7 +81,7 @@ Feature: Action chains on Salt minions
     Then I should see a "Action Chain Channel" text
 
   Scenario: Add a configuration file to configuration channel for testing action chain on Salt minion
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I follow the left menu "Configuration > Channels"
     And I follow "Action Chain Channel"
     And I follow "Create Configuration File or Directory"
@@ -102,7 +102,7 @@ Feature: Action chains on Salt minions
     Then I should see a "Channel Subscriptions successfully changed for" text
 
   Scenario: Add a configuration file deployment to the action chain on Salt minion
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I follow the left menu "Configuration > Channels"
     And I follow "Action Chain Channel"
     And I follow "Deploy Files" in the content area
@@ -180,7 +180,7 @@ Feature: Action chains on Salt minions
     Then I should see a "Action has been successfully added to the Action Chain" text
 
   Scenario: Delete the action chain for Salt minion
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I follow "Schedule"
     And I follow "Action Chains"
     And I follow "new action chain"
@@ -188,7 +188,7 @@ Feature: Action chains on Salt minions
     Then I click on "Delete"
 
   Scenario: Add an action chain using system set manager for traditional client and Salt minion
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I run "zypper -n rm andromeda-dummy" on "sle_client" without error control
     And I run "zypper -n rm andromeda-dummy" on "sle_minion" without error control
     When I am on the System Overview page
@@ -230,7 +230,7 @@ Feature: Action chains on Salt minions
     And I should see a "Action Chain new action chain has been scheduled for execution." text
 
   Scenario: Verify that the action chain from the system set manager was executed successfully
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I run "rhn_check -vvv" on "sle_client"
     And I wait until file "/tmp/action_chain_done" exists on "sle_client"
     And I wait until file "/tmp/action_chain_done" exists on "sle_minion"
@@ -288,7 +288,7 @@ Feature: Action chains on Salt minions
     And I wait until there are no more scheduled actions
 
   Scenario: Cleanup: remove Salt minion from configuration channel
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I follow the left menu "Configuration > Channels"
     And I follow "Action Chain Channel"
     And I follow "Systems" in the content area
@@ -297,7 +297,7 @@ Feature: Action chains on Salt minions
     Then I should see a "Successfully unsubscribed 1 system(s)." text
 
   Scenario: Cleanup: remove configuration channel for Salt minion
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I follow the left menu "Configuration > Channels"
     And I follow "Action Chain Channel"
     And I follow "Delete Channel"
@@ -316,5 +316,5 @@ Feature: Action chains on Salt minions
     And I run "rm -f /tmp/action_chain_one_system_done" on "sle_minion" without error control
 
   Scenario: Cleanup: remove remaining systems from SSM after action chain tests on normal minion
-    When I am authorized as "admin" with password "admin"
+    When I am authorized with the feature's user
     And I follow "Clear"

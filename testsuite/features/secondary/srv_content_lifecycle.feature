@@ -5,7 +5,7 @@ Feature: Content lifecycle
 
 @scc_credentials
   Scenario: Create a content lifecycle project
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I follow the left menu "Content Lifecycle > Projects"
     Then I should see a "Content Lifecycle Projects" text
     And I should see a "There are no entries to show." text
@@ -20,7 +20,7 @@ Feature: Content lifecycle
 
 @scc_credentials
   Scenario: Verify the content lifecycle project page
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I follow the left menu "Content Lifecycle > Projects"
     Then I should see a "clp_name" text
     And I should see a "clp_desc" text
@@ -33,7 +33,7 @@ Feature: Content lifecycle
 
 @scc_credentials
   Scenario: Add a source to the project
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I follow the left menu "Content Lifecycle > Projects"
     And I follow "clp_name"
     And I follow "Attach/Detach Sources"
@@ -44,7 +44,7 @@ Feature: Content lifecycle
 
 @uyuni
   Scenario: Verify added sources for Uyuni
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I follow the left menu "Content Lifecycle > Projects"
     And I follow "clp_name"
     And I should see a "SLES12-SP4-Updates for x86_64" text
@@ -52,7 +52,7 @@ Feature: Content lifecycle
 
 @susemanager
   Scenario: Verify added sources for SUSE Manager
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I follow the left menu "Content Lifecycle > Projects"
     And I follow "clp_name"
     And I should see a "SLE-Manager-Tools12-Updates for x86_64 SP4" text
@@ -62,7 +62,7 @@ Feature: Content lifecycle
 
 @scc_credentials
   Scenario: Add environments to the project
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I follow the left menu "Content Lifecycle > Projects"
     And I follow "clp_name"
     Then I should see a "No environments created" text
@@ -88,7 +88,7 @@ Feature: Content lifecycle
 
 @scc_credentials
   Scenario: Build the sources in the project
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I follow the left menu "Content Lifecycle > Projects"
     And I follow "clp_name"
     Then I should see a "not built" text in the environment "qa_name"
@@ -102,7 +102,7 @@ Feature: Content lifecycle
 
 @scc_credentials
   Scenario: Promote promote the sources in the project
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I follow the left menu "Content Lifecycle > Projects"
     Then I should see a "clp_name" text
     And I should see a "clp_desc" text
@@ -119,7 +119,7 @@ Feature: Content lifecycle
 
 @scc_credentials
   Scenario: Add new sources and promote again
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I follow the left menu "Content Lifecycle > Projects"
     And I follow "clp_name"
     Then I should see a "Build (0)" text
@@ -143,7 +143,7 @@ Feature: Content lifecycle
 
 @scc_credentials
   Scenario: Clean up the Content Lifecycle Management feature
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I follow the left menu "Content Lifecycle > Projects"
     And I follow "clp_name"
     When I click on "Delete"

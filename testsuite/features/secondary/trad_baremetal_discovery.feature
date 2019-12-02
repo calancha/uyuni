@@ -13,7 +13,7 @@ Feature: Bare metal discovery
     Then "sle_client" should not be registered
 
   Scenario: Enable bare metal discovery
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I follow the left menu "Admin > Manager Configuration > General"
     When I follow "Bare-metal systems" in the content area
     Then I should see a "Allows $PRODUCT to automatically add bare-metal systems capable of PXE booting to an organization." text
@@ -83,7 +83,7 @@ Feature: Bare metal discovery
     Then I am on System Set Manager Overview
   
   Scenario: Check SSM page for bare metal system
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     And I am on System Set Manager Overview
     Then I should see a "List the systems" link in the content area
     And I should see a "Autoinstall" link in the content area
@@ -107,7 +107,7 @@ Feature: Bare metal discovery
     Then "sle_client" should not be registered
 
   Scenario: Cleanup: disable bare metal discovery
-    Given I am authorized as "admin" with password "admin"
+    Given I am authorized with the feature's user
     When I follow the left menu "Admin > Manager Configuration > General"
     When I follow "Bare-metal systems" in the content area
     Then I should see a "Allows $PRODUCT to automatically add bare-metal systems capable of PXE booting to an organization." text
@@ -121,5 +121,5 @@ Feature: Bare metal discovery
     Then I should see "sle_client" in spacewalk
 
   Scenario: Cleanup: remove remaining systems from SSM after bare metal tests
-    When I am authorized as "admin" with password "admin"
+    When I am authorized with the feature's user
     And I follow "Clear"

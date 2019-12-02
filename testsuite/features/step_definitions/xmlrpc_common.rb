@@ -464,7 +464,7 @@ end
 
 Then(/^I should see scheduled action, called "(.*?)"$/) do |label|
   assert_includes(
-    scdrpc.list_in_progress_actions.map { |a| a['name'] }, label
+      label, scdrpc.list_in_progress_actions.map { |a| a['name'] }
   )
 end
 

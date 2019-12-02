@@ -4,5 +4,5 @@
 Feature: SUSE Manager can handle a lot of minions
 
   Scenario: Create dockerized minions
-  Given I am authorized as "admin" with password "admin"
+  Given I am authorized with the feature's user
   Then I create dockerized minions
