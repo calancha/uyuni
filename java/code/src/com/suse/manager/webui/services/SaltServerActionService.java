@@ -1,5 +1,5 @@
 /**
- * Copyright (c) 2016 SUSE LLC
+ * Copyright (c) 2016-2020 SUSE LLC
  *
  * This software is licensed to you under the GNU General Public License,
  * version 2 (GPLv2). There is NO WARRANTY for this software, express or
@@ -1864,7 +1864,7 @@ public class SaltServerActionService {
                                 deviceParam.put("path", device.getPath());
                                 device.isSeparator().ifPresent(sep -> deviceParam.put("part_separator", sep));
                                 return deviceParam;
-                            }));
+                            }).collect(Collectors.toList()));
                         }
                         pillar.put("source", source);
                     }
