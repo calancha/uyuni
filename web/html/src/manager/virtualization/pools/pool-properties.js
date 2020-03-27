@@ -131,7 +131,7 @@ export function PoolProperties(props: Props) {
       }) => {
         if (capabilities != null) {
           const pool_types = capabilities['pool_types']
-            .filter(pool_type => pool_type.supported)
+            .filter(pool_type => !pool_type.supported)
             .map(pool_type => pool_type['name']);
 
           const pool_type = capabilities['pool_types'].find(type => type.name === model.type);
