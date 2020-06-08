@@ -1,4 +1,4 @@
-# Copyright (c) 2015-2019 SUSE LLC
+# Copyright (c) 2015-2020 SUSE LLC
 # Licensed under the terms of the MIT license.
 
 Feature: Push a package with unset vendor
@@ -9,6 +9,7 @@ Feature: Push a package with unset vendor
   Background:
     Given I am authorized as "admin" with password "admin"
 
+@sle_client
   Scenario: Download the SSL certificate
     When I download the SSL certificate
     And I make the SSL certificate available to zypper
