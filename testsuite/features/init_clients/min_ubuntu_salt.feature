@@ -21,7 +21,10 @@ Feature: Bootstrap an Ubuntu minion and do some basic operations on it
     And I wait until I see "Successfully bootstrapped host!" text
     And I navigate to "rhn/systems/Overview.do" page
     And I wait until I see the name of "ubuntu_minion", refreshing the page
-    And I wait until onboarding is completed for "ubuntu_minion"
+    And I follow this "ubuntu_minion" link
+    And I wait until event "Hardware List Refresh" is completed
+    And I wait at most 600 seconds until event "Apply states" is completed
+    And I wait until event "Package List Refresh" is completed
     And I query latest Salt changes on ubuntu system "ubuntu_minion"
 
 @proxy
