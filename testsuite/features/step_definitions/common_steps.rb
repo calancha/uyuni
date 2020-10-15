@@ -824,7 +824,7 @@ And(/^I register "([^*]*)" as traditional client with activation key "([^*]*)"$/
     node.run('yum install wget', true, 600, 'root')
   end
   command1 = "wget --no-check-certificate -O /usr/share/rhn/RHN-ORG-TRUSTED-SSL-CERT http://#{$server.ip}/pub/RHN-ORG-TRUSTED-SSL-CERT"
-  puts node.run(command1, true, 500, 'root')
+  puts node.run(command1, true, 500, 'root').gsub(/\\x/, '\\\\x')
   command2 = "rhnreg_ks --force --serverUrl=#{registration_url} --sslCACert=/usr/share/rhn/RHN-ORG-TRUSTED-SSL-CERT --activationkey=#{key}"
   puts node.run(command2, true, 500, 'root')
 end
