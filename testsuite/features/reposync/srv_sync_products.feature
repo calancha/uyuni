@@ -77,6 +77,18 @@ Feature: Synchronize products in the products page of the Setup Wizard
     Then the SLE15SP1 base products should be added
 
 @long_test
+  Scenario: Create an activation key for service pack migration
+    Given I am on the Systems page
+    When I follow the left menu "Systems > Activation Keys"
+    And I follow "Create Key"
+    And I enter "SUSE SPACK MIGRATION Test Key x86_64" as "description"
+    And I enter "SUSE-SP-MIGRATION-x86_64" as "key"
+    And I enter "20" as "usageLimit"
+    And I select "SLE-Product-SLES15-SP1-Pool" from "selectedBaseChannel"
+    And I click on "Create Activation Key"
+    Then I should see a "SUSE SPACK MIGRATION Test Key x86_64" text
+
+@long_test
 @scc_credentials
   Scenario: Enable "SUSE Linux Enterprise Server 15 SP2 with Basesystem module for x86_64"
     Given I am on the Products page
