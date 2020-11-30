@@ -15,6 +15,11 @@ Feature: Service pack migration
     And I wait until I see "has been deleted" text
     Then "sle_client" should not be registered
 
+  Scenario: Create bootstrap script for traditional service pack migration
+    When I execute mgr-bootstrap "--activation-keys=1-SUSE-SSH-TUNNEL-DEV-x86_64 --script=bootstrap-spack-migration.sh --no-up2date --traditional"
+    Then I should get "* bootstrap script (written):"
+    And I should get "    '/srv/www/htdocs/pub/bootstrap/bootstrap-spack-migration.sh'"
+    
   Scenario: Migrate this "sle_client"
     Given I am on the Systems overview page of this "sle_client"
     When I follow "Software" in the content area
