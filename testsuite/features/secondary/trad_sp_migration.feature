@@ -7,6 +7,14 @@
 
 Feature: Service pack migration
 
+  Scenario: Delete the traditional client for service pack migration
+    Given I am on the Systems overview page of this "sle_client"
+    When I follow "Delete System"
+    Then I should see a "Confirm System Profile Deletion" text
+    When I click on "Delete Profile"
+    And I wait until I see "has been deleted" text
+    Then "sle_client" should not be registered
+
   Scenario: Migrate this "sle_client"
     Given I am on the Systems overview page of this "sle_client"
     When I follow "Software" in the content area
