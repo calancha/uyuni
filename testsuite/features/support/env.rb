@@ -22,7 +22,7 @@ require 'pp'
 # SimpleCov.start
 
 server = ENV['SERVER']
-$long_tests_enabled = !ENV['LONG_TESTS'].nil?
+$long_tests_enabled = true
 puts "Executing long running tests" if $long_tests_enabled
 
 # maximal wait before giving up
