@@ -16,11 +16,17 @@ Feature: Service pack migration
     Then "sle_client" should not be registered
 
   Scenario: Create bootstrap script for traditional service pack migration
-    When I execute mgr-bootstrap "--activation-keys=1-SUSE-SSH-TUNNEL-DEV-x86_64 --script=bootstrap-spack-migration.sh --no-up2date --traditional"
+    When I execute mgr-bootstrap "--activation-keys=1-SUSE-SP-MIGRATION-x86_64 --script=bootstrap-spack-migration.sh --no-up2date --traditional"
     Then I should get "* bootstrap script (written):"
     And I should get "    '/srv/www/htdocs/pub/bootstrap/bootstrap-spack-migration.sh'"
     
-  Scenario: Migrate this "sle_client"
+  Scenario: Register this client for service pack migration
+    When I register this client for SSH push via tunnel with "bootstrap-spack-migration.sh" script
+    And I install package "spacewalk-client-setup spacewalk-oscap mgr-cfg-actions" on this "sle_client"
+    And I run "mgr-actions-control --enable-all" on "sle_client"
+    Then I should see "sle_ssh_tunnel_client" via spacecmd
+
+  Scenario: Migrate this traditional client to SLE 15 SP2
     Given I am on the Systems overview page of this "sle_client"
     When I follow "Software" in the content area
     And I follow "SP Migration" in the content area

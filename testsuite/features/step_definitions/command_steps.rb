@@ -676,12 +676,12 @@ And(/I check status "([^"]*)" with spacecmd on "([^"]*)"$/) do |status, host|
   raise "#{out} should contain #{status}" unless out.include? status
 end
 
-When(/^I register this client for SSH push via tunnel$/) do
+When(/^I register this client for SSH push via tunnel with "([^"]*)" script$/) do |script|
   # create backups of /etc/hosts and up2date config
   $server.run('cp /etc/hosts /etc/hosts.BACKUP')
   $server.run('cp /etc/sysconfig/rhn/up2date /etc/sysconfig/rhn/up2date.BACKUP')
   # generate expect file
-  bootstrap = '/srv/www/htdocs/pub/bootstrap/bootstrap-ssh-push-tunnel.sh'
+  bootstrap = "/srv/www/htdocs/pub/bootstrap/#{script}"
   script = "spawn spacewalk-ssh-push-init --client #{$client.ip} --register #{bootstrap} --tunnel\n" \
            "while {1} {\n" \
            "  expect {\n" \
@@ -700,6 +700,10 @@ When(/^I register this client for SSH push via tunnel$/) do
   # restore files from backups
   $server.run('mv /etc/hosts.BACKUP /etc/hosts')
   $server.run('mv /etc/sysconfig/rhn/up2date.BACKUP /etc/sysconfig/rhn/up2date')
+end
+
+When(/^I register this client for SSH push via tunnel$/) do
+  step %(I register this client for SSH push via tunnel with "bootstrap-ssh-push-tunnel.sh" script)
 end
 
 # Repositories and packages management
