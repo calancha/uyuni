@@ -324,7 +324,7 @@ end
 
 # do test only if we want to run service pack migration
 Before('@service_pack_migration') do
-  skip_this_scenario unless service_pack_migration_enabled
+  skip_this_scenario unless $service_pack_migration_enabled
 end
 
 # have more infos about the errors

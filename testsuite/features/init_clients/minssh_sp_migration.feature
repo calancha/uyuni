@@ -7,6 +7,7 @@
 
 @ssh_minion
 @scope_salt_ssh
+@service_pack_migration
 Feature: Service pack migration for SSH minion
   In order to update my systems
   As an authorized user
@@ -57,3 +58,16 @@ Feature: Service pack migration for SSH minion
     Given I am on the Systems overview page of this "ssh_spack_migrated_minion"
     When I follow "Details" in the content area
     Then I should see a "SUSE Linux Enterprise Server 15 SP2" text
+
+  Scenario: Subscribe the service pack migrated SSH minion to a base channel
+    Given I am on the Systems overview page of this "ssh_spack_migrated_minion"
+    When I follow "Software" in the content area
+    And I follow "Software Channels" in the content area
+    And I wait until I do not see "Loading..." text
+    And I check radio button "Test-Channel-x86_64"
+    And I wait until I do not see "Loading..." text
+    And I click on "Next"
+    Then I should see a "Confirm Software Channel Change" text
+    When I click on "Confirm"
+    Then I should see a "Changing the channels has been scheduled." text
+    And I wait until event "Subscribe channels scheduled by admin" is completed
