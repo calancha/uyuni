@@ -44,6 +44,7 @@ Feature: Synchronize products in the products page of the Setup Wizard
     Then the SLE12 products should be added
 
 @scc_credentials
+@service_pack_migration
   Scenario: Add a product with recommended enabled
     Given I am on the Products page
     When I enter "SUSE Linux Enterprise Server 15 SP2" as the filtered product description
@@ -63,6 +64,7 @@ Feature: Synchronize products in the products page of the Setup Wizard
 
 @ssh_minion
 @scc_credentials
+@service_pack_migration
   Scenario: Add a 15 SP1 product
     Given I am on the Products page
     When I enter "SUSE Linux Enterprise Server 15 SP1" as the filtered product description
@@ -76,6 +78,7 @@ Feature: Synchronize products in the products page of the Setup Wizard
 
 @ssh_minion
 @scc_credentials
+@service_pack_migration
   Scenario: Create an activation key for service pack migration a SSH minion
     Given I am on the Systems page
     When I follow the left menu "Systems > Activation Keys"
