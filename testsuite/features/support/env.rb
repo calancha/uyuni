@@ -1,4 +1,4 @@
-# Copyright (c) 2010-2020 SUSE LLC
+# Copyright (c) 2010-2021 SUSE LLC
 # Licensed under the terms of the MIT license.
 
 require 'English'
@@ -23,9 +23,9 @@ require 'pp'
 
 server = ENV['SERVER']
 $debug_mode = true if ENV['DEBUG']
-$long_tests_enabled = true if ENV['LONG_TESTS']
+$long_tests_enabled = true
 puts "Executing long running tests" if $long_tests_enabled
-$service_pack_migration_enabled = !ENV['SERVICE_PACK_MIGRATION'].nil?
+$service_pack_migration_enabled = true
 puts "Executing service pack migrations" if $service_pack_migration_enabled
 
 # maximal wait before giving up
