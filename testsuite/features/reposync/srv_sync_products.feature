@@ -1,4 +1,4 @@
-# Copyright 2017-2019 SUSE LLC
+# Copyright 2017-2021 SUSE LLC
 # Licensed under the terms of the MIT license.
 
 Feature: Synchronize products in the products page of the Setup Wizard
@@ -65,7 +65,7 @@ Feature: Synchronize products in the products page of the Setup Wizard
 @ssh_minion
 @scc_credentials
 @service_pack_migration
-  Scenario: Add a 15 SP1 product
+  Scenario: Add the initial product for the service pack migration
     Given I am on the Products page
     When I enter "SUSE Linux Enterprise Server 15 SP1" as the filtered product description
     And I select "x86_64" in the dropdown list of the architecture filter
