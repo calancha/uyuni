@@ -1,4 +1,4 @@
-# Copyright (c) 2013-2020 SUSE LLC.
+# Copyright (c) 2013-2021 SUSE LLC.
 # Licensed under the terms of the MIT license.
 
 require 'tempfile'
@@ -74,13 +74,13 @@ def compute_list_to_leave_running
   do_not_kill = []
   if $long_tests_enabled
     # keep the repos needed for the auto-installation tests
-    do_not_kill += %w[sle-product-sles15-sp2-pool-x86_64
-                      sle-manager-tools15-pool-x86_64-sp2
-                      sle-module-basesystem15-sp2-pool-x86_64
-                      sle-product-sles15-sp2-updates-x86_64
-                      sle-manager-tools15-updates-x86_64-sp2
-                      sle-module-basesystem15-sp2-updates-x86_64]
+    do_not_kill += CHANNEL_TO_SYNCH_BY_OS_VERSION['default']
   end
+  if $service_pack_migration_enabled
+    do_not_kill += CHANNEL_TO_SYNCH_BY_OS_VERSION[MIGRATE_SSH_MINION_FROM]
+    do_not_kill += CHANNEL_TO_SYNCH_BY_OS_VERSION[MIGRATE_SSH_MINION_TO]
+  end
+
   [$minion, $build_host, $sshminion, $server].each do |node|
     next if node.nil?
     os_version, os_family = get_os_version(node)
@@ -88,52 +88,15 @@ def compute_list_to_leave_running
     do_not_kill +=
       case os_version
       when '12-SP4'
-        %w[sles12-sp4-pool-x86_64
-           sle-manager-tools12-pool-x86_64-sp4
-           sle-module-containers12-pool-x86_64-sp4
-           sles12-sp4-updates-x86_64
-           sle-manager-tools12-updates-x86_64-sp4
-           sle-module-containers12-updates-x86_64-sp4]
+        CHANNEL_TO_SYNCH_BY_OS_VERSION['12-SP4']
       when '12-SP5'
-        %w[sles12-sp5-pool-x86_64
-           sle-manager-tools12-pool-x86_64-sp5
-           sle-module-containers12-pool-x86_64-sp5
-           sles12-sp5-updates-x86_64
-           sle-manager-tools12-updates-x86_64-sp5
-           sle-module-containers12-updates-x86_64-sp5]
+        CHANNEL_TO_SYNCH_BY_OS_VERSION['12-SP5']
       when '15-SP1'
-        %w[sle-product-sles15-sp1-pool-x86_64
-           sle-manager-tools15-pool-x86_64-sp1
-           sle-module-containers15-sp1-pool-x86_64
-           sle-module-basesystem15-sp1-pool-x86_64
-           sle-module-server-applications15-sp1-pool-x86_64
-           sle-product-sles15-sp1-updates-x86_64
-           sle-manager-tools15-updates-x86_64-sp1
-           sle-module-containers15-sp1-updates-x86_64
-           sle-module-basesystem15-sp1-updates-x86_64
-           sle-module-server-applications15-sp1-updates-x86_64]
+        CHANNEL_TO_SYNCH_BY_OS_VERSION['15-SP1']
       when '15-SP2'
-        %w[sle-product-sles15-sp2-pool-x86_64
-           sle-manager-tools15-pool-x86_64-sp2
-           sle-module-containers15-sp2-pool-x86_64
-           sle-module-basesystem15-sp2-pool-x86_64
-           sle-module-server-applications15-sp2-pool-x86_64
-           sle-product-sles15-sp2-updates-x86_64
-           sle-manager-tools15-updates-x86_64-sp2
-           sle-module-containers15-sp2-updates-x86_64
-           sle-module-basesystem15-sp2-updates-x86_64
-           sle-module-server-applications15-sp2-updates-x86_64]
+        CHANNEL_TO_SYNCH_BY_OS_VERSION['15-SP2']
       when '15-SP3'
-        %w[sle-product-sles15-sp3-pool-x86_64
-           sle-manager-tools15-pool-x86_64-sp3
-           sle-module-containers15-sp3-pool-x86_64
-           sle-module-basesystem15-sp3-pool-x86_64
-           sle-module-server-applications15-sp3-pool-x86_64
-           sle-product-sles15-sp3-updates-x86_64
-           sle-manager-tools15-updates-x86_64-sp3
-           sle-module-containers15-sp3-updates-x86_64
-           sle-module-basesystem15-sp3-updates-x86_64
-           sle-module-server-applications15-sp3-updates-x86_64]
+        CHANNEL_TO_SYNCH_BY_OS_VERSION['15-SP3']
       else
         raise "Can't build list of reposyncs to leave running"
       end
