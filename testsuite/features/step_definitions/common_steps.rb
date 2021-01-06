@@ -70,18 +70,24 @@ When(/^I wait until event "([^"]*)" is completed$/) do |event|
   step %(I wait at most #{DEFAULT_TIMEOUT} seconds until event "#{event}" is completed)
 end
 
-When(/^I wait at most (\d+) seconds until event "([^"]*)" is completed$/) do |final_timeout, event|
+When(/^I wait at most (\d+) seconds until event "([^"]*)" is completed$/) do |timeout, event|
+  starting = Time.now
   # The code below is not perfect because there might be other events with the
   # same name in the events history - however, that's the best we have so far.
   steps %(
     When I follow "Events"
     And I follow "Pending"
-    And I wait until I do not see "#{event}" text, refreshing the page
+    And I wait at most #{timeout} seconds until I do not see "#{event}" text, refreshing the page
     And I follow "History"
     And I wait until I see "System History" text
     And I wait until I see "#{event}" text, refreshing the page
+  )
+  ending = Time.now
+  timeout -= ending - starting
+  timeout = 3 if timeout < 3
+  steps %(
     And I follow first "#{event}"
-    And I wait at most #{final_timeout} seconds until the event is completed, refreshing the page
+    And I wait at most #{timeout} seconds until the event is completed, refreshing the page
   )
 end
 
@@ -872,9 +878,6 @@ When(/^I wait until onboarding is completed for "([^"]*)"$/) do |host|
   if get_client_type(host) == 'traditional'
     get_target(host).run('rhn_check -vvv')
   else
-    # Ubuntu minion clients need more time to finish all onboarding events
-    node = get_target(host)
-    _os_version, os_family = get_os_version(node)
     steps %(
       And I wait at most 500 seconds until event "Hardware List Refresh" is completed
       And I wait at most 500 seconds until event "Apply states" is completed
