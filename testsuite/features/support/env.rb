@@ -23,9 +23,9 @@ require 'pp'
 
 server = ENV['SERVER']
 $debug_mode = true if ENV['DEBUG']
-$long_tests_enabled = !ENV['LONG_TESTS'].nil?
+$long_tests_enabled = true if ENV['LONG_TESTS']
 puts "Executing long running tests" if $long_tests_enabled
-$service_pack_migration_enabled = !ENV['SERVICE_PACK_MIGRATION'].nil?
+$service_pack_migration_enabled = true if ENV['SERVICE_PACK_MIGRATION']
 puts "Executing service pack migrations" if $service_pack_migration_enabled
 
 # maximal wait before giving up
