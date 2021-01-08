@@ -1,5 +1,10 @@
 # Copyright (c) 2021 SUSE LLC
 # Licensed under the terms of the MIT license.
+#
+# If you this feature, then comment out sle_ssh_minion.feature in
+# testsuite/run_sets/init_clients.yml and set
+# $service_pack_migration_enabled = false at
+# testsuite/features/support/env.rb
 
 @ssh_minion
 @scope_salt_ssh
@@ -9,14 +14,6 @@ Feature: Service pack migration for SSH minion
   In order to update my systems
   As an authorized user
   I want to migrate from one service pack to the other on SSH managed minions
-
-  Scenario: Delete the SSH minion for service pack migration
-    Given I am on the Systems overview page of this "ssh_minion"
-    When I follow "Delete System"
-    Then I should see a "Confirm System Profile Deletion" text
-    When I click on "Delete Profile"
-    And I wait until I see "has been deleted" text
-    Then "ssh_minion" should not be registered
 
   Scenario: Register this SSH minion for service pack migration
     Given I am authorized

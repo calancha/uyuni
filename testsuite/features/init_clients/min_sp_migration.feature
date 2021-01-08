@@ -1,5 +1,10 @@
 # Copyright (c) 2021 SUSE LLC
 # Licensed under the terms of the MIT license.
+#
+# If you this feature, then comment out sle_minion.feature in
+# testsuite/run_sets/init_clients.yml and set
+# $service_pack_migration_enabled = false at
+# testsuite/features/support/env.rb
 
 @scope_sp_migration
 @service_pack_migration
@@ -8,13 +13,9 @@ Feature: Service pack migration for normal minion
   As an authorized user
   I want to migrate from one service pack to the other on Salt minions
 
-  Scenario: Delete the minion for service pack migration
-    Given I am on the Systems overview page of this "sle_minion"
-    When I follow "Delete System"
-    Then I should see a "Confirm System Profile Deletion" text
-    When I click on "Delete Profile"
-    And I wait until I see "has been deleted" text
-    Then "sle_minion" should not be registered
+  Scenario: Create the bootstrap repository for a service pack migrated Salt client
+     Given I am authorized
+     And I create the "x86_64" bootstrap repository for "sle_spack_migrated_minion" on the server
 
   Scenario: Register this minion for service pack migration
     Given I am authorized
