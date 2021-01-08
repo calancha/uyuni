@@ -103,8 +103,14 @@ Feature: Synchronize products in the products page of the Setup Wizard
     And I click on "Create Activation Key"
     Then I should see a "SUSE SSH SPACK MIGRATION Test Key x86_64" text
 
+@service_pack_migration
+@scc_credentials
+  Scenario: Installer update channels got enabled when products were added for the SP migration
+    When I execute mgr-sync "list channels" with user "admin" and password "admin"
+    Then I should get "    [I] SLES12-SP5-Installer-Updates for x86_64 SUSE Linux Enterprise Server 12 SP5 x86_64 [sles12-sp5-installer-updates-x86_64]"
+    And I should get "    [I] SLE15-SP2-Installer-Updates for x86_64 SUSE Linux Enterprise Server 15 SP2 x86_64 [sle15-sp2-installer-updates-x86_64]"
+
 @scc_credentials
   Scenario: Installer update channels got enabled when products were added
     When I execute mgr-sync "list channels" with user "admin" and password "admin"
     Then I should get "    [I] SLES12-SP5-Installer-Updates for x86_64 SUSE Linux Enterprise Server 12 SP5 x86_64 [sles12-sp5-installer-updates-x86_64]"
-    And I should get "    [I] SLE15-SP2-Installer-Updates for x86_64 SUSE Linux Enterprise Server 15 SP2 x86_64 [sle15-sp2-installer-updates-x86_64]"
