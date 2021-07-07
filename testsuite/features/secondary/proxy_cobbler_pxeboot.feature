@@ -57,10 +57,12 @@ Feature: PXE boot a terminal with Cobbler
     And I click on "Apply Highstate"
     And I wait until event "Apply highstate scheduled by admin" is completed
 
-  Scenario: Create auto installation distribution
+  Scenario: Install TFTP boot package on the server
     When I install package tftpboot-installation on the server
     And I wait for "tftpboot-installation-SLE-15-SP2-x86_64" to be installed on "server"
     And I ensure the "server" resolves its own public address
+
+  Scenario: Create auto installation distribution
     When I follow the left menu "Systems > Autoinstallation > Distributions"
     And I follow "Create Distribution"
     And I enter "SLE-15-SP2-TFTP" as "label"
