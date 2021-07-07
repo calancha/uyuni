@@ -23,9 +23,7 @@ Feature: PXE boot a terminal with Cobbler
     Then I should see a "Formula saved" text
 
   Scenario: Configure PXE part of DNS on the proxy
-    Given I am on the Systems overview page of this "proxy"
-    When I follow "Formulas" in the content area
-    And I follow first "Bind" in the content areaoto
+    When I follow first "Bind" in the content area
     # general information:
     #   (Avahi does not cross networks, so we need to cheat by serving tf.local)
     And I press "Add Item" in configured zones section
@@ -109,13 +107,11 @@ Feature: PXE boot a terminal with Cobbler
     And I wait until onboarding is completed for "pxeboot_minion"
 
   Scenario: Check connection from PXE boot minion to the proxy
-    Given I am on the Systems overview page of this "pxeboot_minion"
     When I follow "Details" in the content area
     And I follow "Connection" in the content area
     Then I should see "proxy" short hostname
 
   Scenario: Install a package on the PXE boot minion
-    Given I am on the Systems overview page of this "pxeboot_minion"
     When I install the GPG key of the test packages repository on the PXE boot minion
     And I follow "Software" in the content area
     And I follow "Install"
@@ -162,7 +158,6 @@ Feature: PXE boot a terminal with Cobbler
     Then I should see a "Formula saved" text
 
   Scenario: Cleanup: the PXE boot minion prefers booting via saltboot
-    Given I am on the Systems overview page of this "proxy"
     When I follow "Formulas" in the content area
     And I follow first "Dhcpd" in the content area
     And I enter "boot/pxelinux.0" in pxeboot filename field
@@ -170,7 +165,6 @@ Feature: PXE boot a terminal with Cobbler
     Then I should see a "Formula saved" text
 
   Scenario: Cleanup: apply the highstate after the formula cleanup changes
-    Given I am on the Systems overview page of this "proxy"
     When I follow "States" in the content area
     And I click on "Apply Highstate"
     And I wait until event "Apply highstate scheduled by admin" is completed
