@@ -609,10 +609,10 @@ Then(/^tftp should be running on the proxy$/) do
   # TODO: Should we handle this in Sumaform?
   when 'Uyuni'
     step %(I enable repositories before installing branch server)
-    cmd = 'zypper --non-interactive --ignore-unknown remove atftp && \
-zypper --non-interactive install tftp && \
-systemctl enable tftp.socket && \
-systemctl start tftp.socket'
+    cmd = 'zypper --non-interactive --ignore-unknown remove atftp && ' \
+          'zypper --non-interactive install tftp && ' \
+          'systemctl enable tftp.socket && ' \
+          'systemctl start tftp.socket'
     node.run(cmd)
     step %(I disable repositories after installing branch server)
   else
