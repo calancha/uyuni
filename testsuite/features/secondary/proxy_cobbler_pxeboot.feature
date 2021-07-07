@@ -1,5 +1,12 @@
 # Copyright (c) 2021 SUSE LLC
 # Licensed under the terms of the MIT license.
+#
+# Idempotency note:
+# * This feature is idempotent.  It is safe to run it before
+#   proxy_retail_pxeboot_and_mass_import.feature
+#
+# * Note that the opposite is not true, i.e.,
+#   please, do not run this feature after the retail one.
 
 @proxy
 @private_net
