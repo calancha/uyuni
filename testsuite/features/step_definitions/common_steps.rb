@@ -675,7 +675,7 @@ Then(/^I remove server hostname from hosts file on "([^"]*)"$/) do |host|
   node.run("sed -i \'s/#{$server.full_hostname}//\' /etc/hosts")
 end
 
-Then(/^Ensure the "([^"]*)" resolves its own public address$/) do |host|
+Then(/^I ensure the "([^"]*)" resolves its own public address$/) do |host|
   node = get_target(host)
   node.run("sed -i 's/^127\.0\.1\.1/#{node.public_ip}/' /etc/hosts")
 end

@@ -58,9 +58,9 @@ Feature: PXE boot a terminal with Cobbler
     And I wait until event "Apply highstate scheduled by admin" is completed
 
   Scenario: Create auto installation distribution
-    And I install package tftpboot-installation on the server
+    When I install package tftpboot-installation on the server
     And I wait for "tftpboot-installation-SLE-15-SP2-x86_64" to be installed on "server"
-    And Ensure the "server" resolves its own public address
+    And I ensure the "server" resolves its own public address
     When I follow the left menu "Systems > Autoinstallation > Distributions"
     And I follow "Create Distribution"
     And I enter "SLE-15-SP2-TFTP" as "label"
@@ -73,9 +73,9 @@ Feature: PXE boot a terminal with Cobbler
     And I should see a "SLE-15-SP2-TFTP" link
 
   Scenario: Create auto installation profile
-    And I follow the left menu "Systems > Autoinstallation > Profiles"
+    When I follow the left menu "Systems > Autoinstallation > Profiles"
     And I follow "Upload Kickstart/Autoyast File"
-    When I enter "15-sp2-cobbler" as "kickstartLabel"
+    And I enter "15-sp2-cobbler" as "kickstartLabel"
     And I select "SLE-15-SP2-TFTP" from "kstreeId"
     And I attach the file "/sle-15-sp2-autoyast.xml" to "fileUpload"
     And I click on "Create"
@@ -90,8 +90,8 @@ Feature: PXE boot a terminal with Cobbler
     Then I should see a "SLE-15-SP2-TFTP" text
 
   Scenario: Set up tftp installation
-    And I configure tftp on the "server"
-    And I ensure tftp is running on the proxy
+    When I configure tftp on the "server"
+    And tftp should be running on the proxy
     And I configure tftp on the "proxy"
     And I synchronize the tftp configuration on the proxy with the server
 
@@ -106,7 +106,7 @@ Feature: PXE boot a terminal with Cobbler
     And I wait until I see the name of "pxeboot_minion", refreshing the page
     And I wait until onboarding is completed for "pxeboot_minion"
 
-  Scenario: Check connection from PXE boot minion to branch server
+  Scenario: Check connection from PXE boot minion to the proxy
     Given I am on the Systems overview page of this "pxeboot_minion"
     When I follow "Details" in the content area
     And I follow "Connection" in the content area
