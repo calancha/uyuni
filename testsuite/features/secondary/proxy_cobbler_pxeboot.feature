@@ -53,7 +53,6 @@ Feature: PXE boot a terminal with Cobbler
     Then I should see a "Formula saved" text
 
   Scenario: Apply the highstate after the formula setup
-    Given I am on the Systems overview page of this "proxy"
     When I follow "States" in the content area
     And I click on "Apply Highstate"
     And I wait until event "Apply highstate scheduled by admin" is completed
