@@ -632,7 +632,6 @@ When(/^I configure tftp on the "([^"]*)"$/) do |host|
   case host
   when 'server'
     sshcmd("configure-tftpsync.sh #{ENV['PROXY']}")
-
   when 'proxy'
     node = get_target(host)
     cmd = "configure-tftpsync.sh --tftpbootdir=/srv/tftpboot \
