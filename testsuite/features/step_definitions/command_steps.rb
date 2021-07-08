@@ -631,7 +631,7 @@ When(/^I configure tftp on the "([^"]*)"$/) do |host|
 
   case host
   when 'server'
-    sshcmd("configure-tftpsync.sh #{ENV['PROXY']}")
+    $server.run("configure-tftpsync.sh #{ENV['PROXY']}")
   when 'proxy'
     node = get_target(host)
     cmd = "configure-tftpsync.sh --tftpbootdir=/srv/tftpboot \
@@ -646,7 +646,7 @@ When(/^I synchronize the tftp configuration on the proxy with the server$/) do
   cmd = "cp /etc/hosts /etc/hosts.BACKUP && echo \"#{$proxy.public_ip} #{ENV['PROXY']} #{ENV['PROXY'].delete_suffix '.tf.local'}\" >> /etc/hosts"
   $server.run(cmd)
   begin
-    sshcmd('cobbler sync')
+    $server.run('cobbler sync')
   ensure
     $server.run('mv /etc/hosts.BACKUP /etc/hosts')
   end
