@@ -603,7 +603,7 @@ Then(/^the cobbler report should contain "([^"]*)" for "([^"]*)"$/) do |text, ho
   raise "Not found:\n#{output}" unless output.include?(text)
 end
 
-Then(/^tftp should be running on the proxy$/) do
+When(/^I start tftp on the proxy$/) do
   node = get_target('proxy')
   case $product
   # TODO: Should we handle this in Sumaform?
