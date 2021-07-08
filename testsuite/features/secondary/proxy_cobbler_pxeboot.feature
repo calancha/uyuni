@@ -107,7 +107,6 @@ Feature: PXE boot a terminal with Cobbler
   Scenario: Set up tftp installation
     When I configure tftp on the "server"
     And I start tftp on the proxy
-    And tftp should be running on the proxy
     And I configure tftp on the "proxy"
     And I synchronize the tftp configuration on the proxy with the server
 
