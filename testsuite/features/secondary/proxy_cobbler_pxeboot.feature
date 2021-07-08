@@ -48,6 +48,17 @@ Feature: PXE boot a terminal with Cobbler
     And I enter the IP address of "server" in sixth A address field
     And I press "Add Item" in third NS section
     And I enter the hostname of "proxy" in third NS field
+    # reverse zone xx.168.192.in-addr.arpa:
+    And I press "Add Item" in available zones section
+    And I enter the local zone name in second available zone name field
+    And I enter the local file name in second file name field
+    And I enter "proxy.example.org." in second name server field
+    And I enter "admin@example.org." in second contact field
+    And I press "Add Item" in second NS section
+    And I enter "proxy.example.org." in second NS field
+    And I enter the local network in second generate reverse network field
+    And I press "Add Item" in second for zones section
+    And I enter "example.org" in second for zones field
     # end
     And I scroll to the top of the page
     And I should see a "Bind" text
