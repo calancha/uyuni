@@ -633,11 +633,10 @@ When(/^I configure tftp on the "([^"]*)"$/) do |host|
   when 'server'
     $server.run("configure-tftpsync.sh #{ENV['PROXY']}")
   when 'proxy'
-    node = get_target(host)
     cmd = "configure-tftpsync.sh --tftpbootdir=/srv/tftpboot \
 --server-fqdn=#{ENV['PROXY']} --server-ip=#{$server.public_ip} \
 --proxy-fqdn=#{ENV['SERVER']} --proxy-ip=#{$proxy.public_ip}"
-    node.run(cmd)
+    $proxy.run(cmd)
   end
 end
 
