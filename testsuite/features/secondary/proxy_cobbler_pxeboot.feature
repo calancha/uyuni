@@ -49,6 +49,7 @@ Feature: PXE boot a terminal with Cobbler
     And I press "Add Item" in third NS section
     And I enter the hostname of "proxy" in third NS field
     # reverse zone xx.168.192.in-addr.arpa:
+    And I scroll to the top of the page
     And I press "Add Item" in available zones section
     And I enter the local zone name in second available zone name field
     And I enter the local file name in second file name field
