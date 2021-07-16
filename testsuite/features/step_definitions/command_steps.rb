@@ -642,14 +642,14 @@ end
 
 When(/^I synchronize the tftp configuration on the proxy with the server$/) do
   # ensure the server can resolve the proxy address before synch
-  # cmd = "cp /etc/hosts /etc/hosts.BACKUP && echo \"#{$proxy.public_ip} #{ENV['PROXY']} #{ENV['PROXY'].delete_suffix '.tf.local'}\" >> /etc/hosts"
-  # $server.run(cmd)
-  # begin
-  #   $server.run('cobbler sync')
-  # ensure
-  #   $server.run('mv /etc/hosts.BACKUP /etc/hosts')
-  # end
-  $server.run('cobbler sync')
+  cmd = "cp /etc/hosts /etc/hosts.BACKUP && echo \"#{$proxy.public_ip} #{ENV['PROXY']} #{ENV['PROXY'].delete_suffix '.tf.local'}\" >> /etc/hosts"
+  $server.run(cmd)
+  begin
+    $server.run('cobbler sync')
+  ensure
+    $server.run('mv /etc/hosts.BACKUP /etc/hosts')
+  end
+  # $server.run('cobbler sync')
 end
 
 When(/^I set the default PXE menu entry to the "([^"]*)" on the "([^"]*)"$/) do |entry, host|
